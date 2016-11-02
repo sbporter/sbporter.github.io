@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Post-rsses on Seth&#39;s Blog</title>
-    <link>http://sbporter.com/post/index.xml</link>
+    <link>http://www.sbporter.com/post/index.xml</link>
     <description>Recent content in Post-rsses on Seth&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Powered by [Hugo](http://gohugo.io).</copyright>
     <lastBuildDate>Wed, 02 Nov 2016 01:09:59 -0600</lastBuildDate>
-    <atom:link href="http://sbporter.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://www.sbporter.com/post/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>First Post</title>
-      <link>http://sbporter.com/post/test/</link>
+      <link>http://www.sbporter.com/post/test/</link>
       <pubDate>Wed, 02 Nov 2016 01:09:59 -0600</pubDate>
       
-      <guid>http://sbporter.com/post/test/</guid>
+      <guid>http://www.sbporter.com/post/test/</guid>
       <description>&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;
 
 &lt;pre&gt;
