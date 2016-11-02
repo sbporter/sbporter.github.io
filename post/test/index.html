@@ -69,8 +69,8 @@ import UIKit
 class TestViewController: UIViewController {
     var myView = UIView()
         
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override func viewDidLoad() {
+        super.viewDidLoad()
               
         myView.backgroundColor = UIColor.green  
         myView.translatesAutoresizingMaskIntoConstraints = false
