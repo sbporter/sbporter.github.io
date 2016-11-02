@@ -31,7 +31,7 @@
 import UIKit
 
 
-class StatusOverlayButton: UIButton {
+class TestViewController: UIViewController {
     var myView = UIView()
         
     override init(frame: CGRect) {
