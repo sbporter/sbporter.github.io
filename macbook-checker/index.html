@@ -333,6 +333,7 @@
     <button class="filter-btn" data-filter="m4">M4</button>
     <button class="filter-btn" data-filter="m4pro">M4 Pro</button>
     <button class="filter-btn" data-filter="m4max">M4 Max</button>
+    <button class="filter-btn" data-filter="nano">Nano-texture</button>
   </div>
 
   <div class="status-bar" id="status"></div>
@@ -342,21 +343,26 @@
 
 <script>
 const MODELS = [
-  // M4 base
-  { part: "MW2U3LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "16GB", storage: "512GB", color: "Space Black", price: 1599, tier: "m4" },
-  { part: "MW2W3LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "16GB", storage: "512GB", color: "Silver", price: 1599, tier: "m4" },
-  { part: "MW2V3LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "16GB", storage: "1TB", color: "Space Black", price: 1799, tier: "m4" },
-  { part: "MW2X3LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "16GB", storage: "1TB", color: "Silver", price: 1799, tier: "m4" },
-  { part: "MCX04LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "24GB", storage: "1TB", color: "Space Black", price: 1999, tier: "m4" },
-  { part: "MCX14LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "24GB", storage: "1TB", color: "Silver", price: 1999, tier: "m4" },
-  // M4 Pro
-  { part: "MX2E3LL/A", chip: "M4 Pro", cpu: "12-core CPU", gpu: "16-core GPU", ram: "24GB", storage: "512GB", color: "Silver", price: 1999, tier: "m4pro" },
-  { part: "MX2H3LL/A", chip: "M4 Pro", cpu: "12-core CPU", gpu: "16-core GPU", ram: "24GB", storage: "512GB", color: "Space Black", price: 1999, tier: "m4pro" },
-  { part: "MX2F3LL/A", chip: "M4 Pro", cpu: "14-core CPU", gpu: "20-core GPU", ram: "24GB", storage: "1TB", color: "Silver", price: 2499, tier: "m4pro" },
-  { part: "MX2J3LL/A", chip: "M4 Pro", cpu: "14-core CPU", gpu: "20-core GPU", ram: "24GB", storage: "1TB", color: "Space Black", price: 2499, tier: "m4pro" },
-  // M4 Max
-  { part: "MX2G3LL/A", chip: "M4 Max", cpu: "14-core CPU", gpu: "32-core GPU", ram: "36GB", storage: "1TB", color: "Silver", price: 3199, tier: "m4max" },
-  { part: "MX2K3LL/A", chip: "M4 Max", cpu: "14-core CPU", gpu: "32-core GPU", ram: "36GB", storage: "1TB", color: "Space Black", price: 3199, tier: "m4max" },
+  // M4 base - Standard display
+  { part: "MW2U3LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "16GB", storage: "512GB", color: "Space Black", display: "Standard", price: 1599, tier: "m4" },
+  { part: "MW2W3LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "16GB", storage: "512GB", color: "Silver", display: "Standard", price: 1599, tier: "m4" },
+  { part: "MW2V3LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "16GB", storage: "1TB", color: "Space Black", display: "Standard", price: 1799, tier: "m4" },
+  { part: "MW2X3LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "16GB", storage: "1TB", color: "Silver", display: "Standard", price: 1799, tier: "m4" },
+  { part: "MCX04LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "24GB", storage: "1TB", color: "Space Black", display: "Standard", price: 1999, tier: "m4" },
+  { part: "MCX14LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "24GB", storage: "1TB", color: "Silver", display: "Standard", price: 1999, tier: "m4" },
+  // M4 base - Nano-texture display
+  { part: "MXCM3LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "24GB", storage: "1TB", color: "Space Black", display: "Nano-texture", price: 2149, tier: "m4" },
+  { part: "MXCN3LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "24GB", storage: "1TB", color: "Silver", display: "Nano-texture", price: 2149, tier: "m4" },
+  // M4 Pro - Standard display
+  { part: "MX2E3LL/A", chip: "M4 Pro", cpu: "12-core CPU", gpu: "16-core GPU", ram: "24GB", storage: "512GB", color: "Silver", display: "Standard", price: 1999, tier: "m4pro" },
+  { part: "MX2H3LL/A", chip: "M4 Pro", cpu: "12-core CPU", gpu: "16-core GPU", ram: "24GB", storage: "512GB", color: "Space Black", display: "Standard", price: 1999, tier: "m4pro" },
+  { part: "MX2F3LL/A", chip: "M4 Pro", cpu: "14-core CPU", gpu: "20-core GPU", ram: "24GB", storage: "1TB", color: "Silver", display: "Standard", price: 2499, tier: "m4pro" },
+  { part: "MX2J3LL/A", chip: "M4 Pro", cpu: "14-core CPU", gpu: "20-core GPU", ram: "24GB", storage: "1TB", color: "Space Black", display: "Standard", price: 2499, tier: "m4pro" },
+  // M4 Pro - Nano-texture display, 48GB, 2TB
+  { part: "MXE63LL/A", chip: "M4 Pro", cpu: "14-core CPU", gpu: "20-core GPU", ram: "48GB", storage: "2TB", color: "Space Black", display: "Nano-texture", price: 3049, tier: "m4pro" },
+  // M4 Max - Standard display
+  { part: "MX2G3LL/A", chip: "M4 Max", cpu: "14-core CPU", gpu: "32-core GPU", ram: "36GB", storage: "1TB", color: "Silver", display: "Standard", price: 3199, tier: "m4max" },
+  { part: "MX2K3LL/A", chip: "M4 Max", cpu: "14-core CPU", gpu: "32-core GPU", ram: "36GB", storage: "1TB", color: "Space Black", display: "Standard", price: 3199, tier: "m4max" },
 ];
 
 const PROXY_URL = "https://corsproxy.io/?url=";
@@ -450,13 +456,14 @@ function renderResults(data) {
         isAvail,
         quote,
         html: `
-          <div class="model-card ${isAvail ? "available" : ""}" data-tier="${model.tier}" data-avail="${isAvail}">
-            <div class="model-title">${model.chip} - ${model.color}</div>
+          <div class="model-card ${isAvail ? "available" : ""}" data-tier="${model.tier}" data-avail="${isAvail}" data-display="${model.display}">
+            <div class="model-title">${model.chip} - ${model.color}${model.display === "Nano-texture" ? ' <span style="color:var(--yellow);font-size:0.78rem;font-weight:500;">NT</span>' : ""}</div>
             <div class="model-specs">
               <span>${model.cpu}</span>
               <span>${model.gpu}</span>
               <span>${model.ram}</span>
               <span>${model.storage}</span>
+              ${model.display === "Nano-texture" ? '<span style="background:#4a3800;">Nano-texture</span>' : ""}
               <span>$${model.price.toLocaleString()}</span>
             </div>
             <div class="model-status ${isAvail ? "avail" : "unavail"}">
@@ -504,8 +511,8 @@ function renderResults(data) {
       model,
       isNextDay,
       html: `
-        <div class="delivery-card ${isNextDay ? "next-day" : ""}" data-tier="${model.tier}">
-          <div class="delivery-title">${model.chip} - ${model.color} (${model.ram}/${model.storage}) - $${model.price.toLocaleString()}</div>
+        <div class="delivery-card ${isNextDay ? "next-day" : ""}" data-tier="${model.tier}" data-display="${model.display}">
+          <div class="delivery-title">${model.chip} - ${model.color} (${model.ram}/${model.storage})${model.display === "Nano-texture" ? ' <span style="color:var(--yellow);">NT</span>' : ""} - $${model.price.toLocaleString()}</div>
           <div class="delivery-info ${isNextDay ? "highlight" : ""}">
             ${mainMsg || options.map(o => o.deliveryOptionMessage).join(", ") || "Check apple.com for delivery estimates"}
           </div>
@@ -579,10 +586,13 @@ document.getElementById("filters").addEventListener("click", (e) => {
   document.querySelectorAll(".model-card, .delivery-card").forEach(card => {
     const tier = card.dataset.tier;
     const avail = card.dataset.avail;
+    const display = card.dataset.display;
     let show = true;
 
     if (activeFilter === "available") {
       show = avail === "true";
+    } else if (activeFilter === "nano") {
+      show = display === "Nano-texture";
     } else if (activeFilter !== "all") {
       show = tier === activeFilter;
     }
