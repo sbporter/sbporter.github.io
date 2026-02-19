@@ -16,6 +16,20 @@
       --green: #30d158;
       --red: #ff453a;
       --yellow: #ffd60a;
+      --pill-chip: #1c3a5e;
+      --pill-chip-text: #5ac8fa;
+      --pill-cpu: #3a2a1a;
+      --pill-cpu-text: #ff9f0a;
+      --pill-gpu: #2a1a3a;
+      --pill-gpu-text: #bf5af2;
+      --pill-ram: #1a3a2a;
+      --pill-ram-text: #30d158;
+      --pill-ssd: #3a3a1a;
+      --pill-ssd-text: #ffd60a;
+      --pill-nano: #4a3000;
+      --pill-nano-text: #ffd60a;
+      --pill-price: #3a3a3a;
+      --pill-price-text: #e8e8e8;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -107,9 +121,7 @@
       padding: 0 1rem 2rem;
     }
 
-    .store-section {
-      margin-bottom: 2rem;
-    }
+    .store-section { margin-bottom: 2rem; }
 
     .store-header {
       display: flex;
@@ -120,15 +132,8 @@
       border-bottom: 1px solid var(--border);
     }
 
-    .store-name {
-      font-size: 1.2rem;
-      font-weight: 600;
-    }
-
-    .store-addr {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
+    .store-name { font-size: 1.2rem; font-weight: 600; }
+    .store-addr { font-size: 0.85rem; color: var(--text-muted); }
 
     .models-grid {
       display: grid;
@@ -154,22 +159,34 @@
     .model-title {
       font-size: 0.95rem;
       font-weight: 600;
-      margin-bottom: 0.35rem;
-    }
-
-    .model-specs {
-      font-size: 0.82rem;
-      color: var(--text-muted);
       margin-bottom: 0.5rem;
     }
 
-    .model-specs span {
-      display: inline-block;
-      background: #3a3a3a;
-      padding: 0.1rem 0.45rem;
-      border-radius: 4px;
-      margin: 0.1rem 0.15rem 0.1rem 0;
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-bottom: 0.5rem;
     }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.15rem 0.55rem;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+
+    .pill-chip { background: var(--pill-chip); color: var(--pill-chip-text); }
+    .pill-cpu { background: var(--pill-cpu); color: var(--pill-cpu-text); }
+    .pill-gpu { background: var(--pill-gpu); color: var(--pill-gpu-text); }
+    .pill-ram { background: var(--pill-ram); color: var(--pill-ram-text); }
+    .pill-ssd { background: var(--pill-ssd); color: var(--pill-ssd-text); }
+    .pill-nano { background: var(--pill-nano); color: var(--pill-nano-text); }
+    .pill-price { background: var(--pill-price); color: var(--pill-price-text); }
 
     .model-status {
       display: flex;
@@ -219,7 +236,7 @@
     .delivery-title {
       font-size: 0.95rem;
       font-weight: 600;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.35rem;
     }
 
     .delivery-info {
@@ -348,24 +365,30 @@ const MODELS = [
   { part: "MW2W3LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "16GB", storage: "512GB", color: "Silver", display: "Standard", price: 1599, tier: "m4" },
   { part: "MW2V3LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "16GB", storage: "1TB", color: "Space Black", display: "Standard", price: 1799, tier: "m4" },
   { part: "MW2X3LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "16GB", storage: "1TB", color: "Silver", display: "Standard", price: 1799, tier: "m4" },
-  { part: "MCX04LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "24GB", storage: "1TB", color: "Space Black", display: "Standard", price: 1999, tier: "m4" },
-  { part: "MCX14LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "24GB", storage: "1TB", color: "Silver", display: "Standard", price: 1999, tier: "m4" },
+  { part: "MCX04LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "24GB", storage: "1TB", color: "Space Black", display: "Standard", price: 1899, tier: "m4" },
+  { part: "MCX14LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "24GB", storage: "1TB", color: "Silver", display: "Standard", price: 1899, tier: "m4" },
   // M4 base - Nano-texture display
-  { part: "MXCM3LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "24GB", storage: "1TB", color: "Space Black", display: "Nano-texture", price: 2149, tier: "m4" },
-  { part: "MXCN3LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "24GB", storage: "1TB", color: "Silver", display: "Nano-texture", price: 2149, tier: "m4" },
+  { part: "MXCM3LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "24GB", storage: "1TB", color: "Space Black", display: "Nano-texture", price: 2049, tier: "m4" },
+  { part: "MXCN3LL/A", chip: "M4", cpu: "10-core CPU", gpu: "10-core GPU", ram: "24GB", storage: "1TB", color: "Silver", display: "Nano-texture", price: 2049, tier: "m4" },
   // M4 Pro - Standard display
   { part: "MX2E3LL/A", chip: "M4 Pro", cpu: "12-core CPU", gpu: "16-core GPU", ram: "24GB", storage: "512GB", color: "Silver", display: "Standard", price: 1999, tier: "m4pro" },
   { part: "MX2H3LL/A", chip: "M4 Pro", cpu: "12-core CPU", gpu: "16-core GPU", ram: "24GB", storage: "512GB", color: "Space Black", display: "Standard", price: 1999, tier: "m4pro" },
-  { part: "MX2F3LL/A", chip: "M4 Pro", cpu: "14-core CPU", gpu: "20-core GPU", ram: "24GB", storage: "1TB", color: "Silver", display: "Standard", price: 2499, tier: "m4pro" },
-  { part: "MX2J3LL/A", chip: "M4 Pro", cpu: "14-core CPU", gpu: "20-core GPU", ram: "24GB", storage: "1TB", color: "Space Black", display: "Standard", price: 2499, tier: "m4pro" },
+  { part: "MX2F3LL/A", chip: "M4 Pro", cpu: "14-core CPU", gpu: "20-core GPU", ram: "24GB", storage: "1TB", color: "Silver", display: "Standard", price: 2399, tier: "m4pro" },
+  { part: "MX2J3LL/A", chip: "M4 Pro", cpu: "14-core CPU", gpu: "20-core GPU", ram: "24GB", storage: "1TB", color: "Space Black", display: "Standard", price: 2399, tier: "m4pro" },
   // M4 Pro - Nano-texture display, 48GB, 2TB
-  { part: "MXE63LL/A", chip: "M4 Pro", cpu: "14-core CPU", gpu: "20-core GPU", ram: "48GB", storage: "2TB", color: "Space Black", display: "Nano-texture", price: 3049, tier: "m4pro" },
+  { part: "MXE63LL/A", chip: "M4 Pro", cpu: "14-core CPU", gpu: "20-core GPU", ram: "48GB", storage: "2TB", color: "Space Black", display: "Nano-texture", price: 2949, tier: "m4pro" },
   // M4 Max - Standard display
   { part: "MX2G3LL/A", chip: "M4 Max", cpu: "14-core CPU", gpu: "32-core GPU", ram: "36GB", storage: "1TB", color: "Silver", display: "Standard", price: 3199, tier: "m4max" },
   { part: "MX2K3LL/A", chip: "M4 Max", cpu: "14-core CPU", gpu: "32-core GPU", ram: "36GB", storage: "1TB", color: "Space Black", display: "Standard", price: 3199, tier: "m4max" },
 ];
 
-const PROXY_URL = "https://corsproxy.io/?url=";
+// CORS proxy fallback chain
+const PROXIES = [
+  (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+  (url) => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
+  (url) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+];
+
 let lastData = null;
 let activeFilter = "all";
 
@@ -373,6 +396,36 @@ function setStatus(msg, isError) {
   const el = document.getElementById("status");
   el.innerHTML = msg;
   el.className = "status-bar" + (isError ? " error" : "");
+}
+
+function renderPills(model) {
+  let pills = `<span class="pill pill-chip">${model.chip}</span>`;
+  pills += `<span class="pill pill-cpu">${model.cpu}</span>`;
+  pills += `<span class="pill pill-gpu">${model.gpu}</span>`;
+  pills += `<span class="pill pill-ram">${model.ram}</span>`;
+  pills += `<span class="pill pill-ssd">${model.storage}</span>`;
+  if (model.display === "Nano-texture") {
+    pills += `<span class="pill pill-nano">Nano-texture</span>`;
+  }
+  pills += `<span class="pill pill-price">$${model.price.toLocaleString()}</span>`;
+  return pills;
+}
+
+async function fetchWithProxyFallback(appleUrl) {
+  let lastErr;
+  for (const proxyFn of PROXIES) {
+    const proxyUrl = proxyFn(appleUrl);
+    try {
+      const resp = await fetch(proxyUrl);
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const text = await resp.text();
+      return JSON.parse(text);
+    } catch (err) {
+      lastErr = err;
+      console.warn(`Proxy failed: ${err.message}, trying next...`);
+    }
+  }
+  throw lastErr || new Error("All proxies failed");
 }
 
 async function checkStock() {
@@ -390,7 +443,6 @@ async function checkStock() {
   document.getElementById("filters").style.display = "none";
   setStatus('<span class="spinner"></span> Fetching availability from Apple...', false);
 
-  // Build Apple API URL with all part numbers
   const params = new URLSearchParams();
   MODELS.forEach((m, i) => params.set(`parts.${i}`, m.part));
   params.set("location", zip);
@@ -399,9 +451,7 @@ async function checkStock() {
   const appleUrl = `https://www.apple.com/shop/fulfillment-messages?${params.toString()}`;
 
   try {
-    const resp = await fetch(PROXY_URL + encodeURIComponent(appleUrl));
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    const data = await resp.json();
+    const data = await fetchWithProxyFallback(appleUrl);
 
     if (data.body && data.body.errorMessage) {
       throw new Error(data.body.errorMessage);
@@ -414,7 +464,7 @@ async function checkStock() {
     setStatus("", false);
   } catch (err) {
     console.error(err);
-    setStatus(`Failed to fetch: ${err.message}. Try refreshing or check Apple directly.`, true);
+    setStatus(`Failed to fetch availability. Try refreshing or check Apple directly.`, true);
     renderDirectLinks(zip);
   }
 
@@ -436,7 +486,6 @@ function renderResults(data) {
 
   let html = "";
 
-  // Render stores
   stores.forEach(store => {
     const parts = store.partsAvailability || {};
     const cards = [];
@@ -457,15 +506,8 @@ function renderResults(data) {
         quote,
         html: `
           <div class="model-card ${isAvail ? "available" : ""}" data-tier="${model.tier}" data-avail="${isAvail}" data-display="${model.display}">
-            <div class="model-title">${model.chip} - ${model.color}${model.display === "Nano-texture" ? ' <span style="color:var(--yellow);font-size:0.78rem;font-weight:500;">NT</span>' : ""}</div>
-            <div class="model-specs">
-              <span>${model.cpu}</span>
-              <span>${model.gpu}</span>
-              <span>${model.ram}</span>
-              <span>${model.storage}</span>
-              ${model.display === "Nano-texture" ? '<span style="background:#4a3800;">Nano-texture</span>' : ""}
-              <span>$${model.price.toLocaleString()}</span>
-            </div>
+            <div class="model-title">${model.color}</div>
+            <div class="pill-row">${renderPills(model)}</div>
             <div class="model-status ${isAvail ? "avail" : "unavail"}">
               <span class="dot"></span>
               ${quote}
@@ -475,7 +517,6 @@ function renderResults(data) {
       });
     });
 
-    // Sort: available first, then by price
     cards.sort((a, b) => {
       if (a.isAvail !== b.isAvail) return a.isAvail ? -1 : 1;
       return a.model.price - b.model.price;
@@ -512,7 +553,8 @@ function renderResults(data) {
       isNextDay,
       html: `
         <div class="delivery-card ${isNextDay ? "next-day" : ""}" data-tier="${model.tier}" data-display="${model.display}">
-          <div class="delivery-title">${model.chip} - ${model.color} (${model.ram}/${model.storage})${model.display === "Nano-texture" ? ' <span style="color:var(--yellow);">NT</span>' : ""} - $${model.price.toLocaleString()}</div>
+          <div class="delivery-title">${model.color}</div>
+          <div class="pill-row">${renderPills(model)}</div>
           <div class="delivery-info ${isNextDay ? "highlight" : ""}">
             ${mainMsg || options.map(o => o.deliveryOptionMessage).join(", ") || "Check apple.com for delivery estimates"}
           </div>
@@ -537,7 +579,6 @@ function renderResults(data) {
 
   document.getElementById("results").innerHTML = html;
 
-  // Summary
   const nextDayCount = deliveryCards.filter(c => c.isNextDay).length;
   document.getElementById("summary").innerHTML = `
     <div class="summary-stat">
@@ -563,10 +604,9 @@ function renderDirectLinks(zip) {
     html += `
       <div class="delivery-card">
         <div class="delivery-title">
-          <a href="${url}" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">
-            ${m.chip} - ${m.color} (${m.ram}/${m.storage}) - $${m.price.toLocaleString()}
-          </a>
+          <a href="${url}" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">${m.color}</a>
         </div>
+        <div class="pill-row">${renderPills(m)}</div>
         <div class="delivery-info">Click to check on apple.com</div>
       </div>
     `;
