@@ -382,12 +382,34 @@ const MODELS = [
   { part: "MX2K3LL/A", chip: "M4 Max", cpu: "14-core CPU", gpu: "32-core GPU", ram: "36GB", storage: "1TB", color: "Space Black", display: "Standard", price: 3199, tier: "m4max" },
 ];
 
-// CORS proxy fallback chain
+// CORS proxy strategies - each returns { url, parse } where parse extracts JSON from response
 const PROXIES = [
-  (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-  (url) => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
-  (url) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+  {
+    name: "allorigins-get",
+    build: (url) => `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
+    parse: async (resp) => {
+      const wrapper = await resp.json();
+      return JSON.parse(wrapper.contents);
+    }
+  },
+  {
+    name: "allorigins-raw",
+    build: (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+    parse: async (resp) => resp.json()
+  },
+  {
+    name: "corsproxy",
+    build: (url) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+    parse: async (resp) => resp.json()
+  },
+  {
+    name: "codetabs",
+    build: (url) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+    parse: async (resp) => resp.json()
+  },
 ];
+
+const BATCH_SIZE = 5; // parts per request to keep URLs short
 
 let lastData = null;
 let activeFilter = "all";
@@ -411,21 +433,74 @@ function renderPills(model) {
   return pills;
 }
 
-async function fetchWithProxyFallback(appleUrl) {
+function buildAppleUrl(parts, zip) {
+  const params = new URLSearchParams();
+  parts.forEach((p, i) => params.set(`parts.${i}`, p));
+  params.set("location", zip);
+  params.set("searchNearby", "true");
+  return `https://www.apple.com/shop/fulfillment-messages?${params.toString()}`;
+}
+
+async function fetchWithProxy(appleUrl) {
   let lastErr;
-  for (const proxyFn of PROXIES) {
-    const proxyUrl = proxyFn(appleUrl);
+  for (const proxy of PROXIES) {
+    const proxyUrl = proxy.build(appleUrl);
     try {
-      const resp = await fetch(proxyUrl);
+      const resp = await fetch(proxyUrl, {
+        headers: { "Accept": "application/json" }
+      });
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-      const text = await resp.text();
-      return JSON.parse(text);
+      const data = await proxy.parse(resp);
+      // Validate it looks like Apple's response
+      if (data && data.head && data.body) return data;
+      throw new Error("Invalid response structure");
     } catch (err) {
       lastErr = err;
-      console.warn(`Proxy failed: ${err.message}, trying next...`);
+      console.warn(`Proxy ${proxy.name} failed: ${err.message}`);
     }
   }
   throw lastErr || new Error("All proxies failed");
+}
+
+function mergeAppleResponses(responses) {
+  // Merge multiple batch responses into one unified response
+  const merged = {
+    head: responses[0].head,
+    body: {
+      content: {
+        pickupMessage: { stores: [] },
+        deliveryMessage: {}
+      }
+    }
+  };
+
+  const storeMap = new Map();
+
+  for (const resp of responses) {
+    const content = resp.body?.content;
+    if (!content) continue;
+
+    // Merge delivery messages
+    const delivery = content.deliveryMessage || {};
+    Object.assign(merged.body.content.deliveryMessage, delivery);
+
+    // Merge store pickup data
+    const stores = content.pickupMessage?.stores || [];
+    for (const store of stores) {
+      if (!storeMap.has(store.storeNumber)) {
+        storeMap.set(store.storeNumber, {
+          ...store,
+          partsAvailability: { ...store.partsAvailability }
+        });
+      } else {
+        const existing = storeMap.get(store.storeNumber);
+        Object.assign(existing.partsAvailability, store.partsAvailability);
+      }
+    }
+  }
+
+  merged.body.content.pickupMessage.stores = Array.from(storeMap.values());
+  return merged;
 }
 
 async function checkStock() {
@@ -441,24 +516,27 @@ async function checkStock() {
   document.getElementById("results").innerHTML = "";
   document.getElementById("summary").style.display = "none";
   document.getElementById("filters").style.display = "none";
-  setStatus('<span class="spinner"></span> Fetching availability from Apple...', false);
-
-  const params = new URLSearchParams();
-  MODELS.forEach((m, i) => params.set(`parts.${i}`, m.part));
-  params.set("location", zip);
-  params.set("searchNearby", "true");
-
-  const appleUrl = `https://www.apple.com/shop/fulfillment-messages?${params.toString()}`;
 
   try {
-    const data = await fetchWithProxyFallback(appleUrl);
-
-    if (data.body && data.body.errorMessage) {
-      throw new Error(data.body.errorMessage);
+    // Split models into batches to keep URLs short
+    const allParts = MODELS.map(m => m.part);
+    const batches = [];
+    for (let i = 0; i < allParts.length; i += BATCH_SIZE) {
+      batches.push(allParts.slice(i, i + BATCH_SIZE));
     }
 
-    lastData = data;
-    renderResults(data);
+    const responses = [];
+    for (let i = 0; i < batches.length; i++) {
+      setStatus(`<span class="spinner"></span> Checking batch ${i + 1} of ${batches.length}...`, false);
+      const url = buildAppleUrl(batches[i], zip);
+      const data = await fetchWithProxy(url);
+      if (data.body?.errorMessage) throw new Error(data.body.errorMessage);
+      responses.push(data);
+    }
+
+    const merged = mergeAppleResponses(responses);
+    lastData = merged;
+    renderResults(merged);
     document.getElementById("filters").style.display = "flex";
     document.getElementById("timestamp").textContent = `Last checked: ${new Date().toLocaleTimeString()}`;
     setStatus("", false);
